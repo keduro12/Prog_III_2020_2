@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Prog_III_2020_2_sesion_1.Persona">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAIAgCAAgAAAAIAAAAAAAAAAAgQAAAA=</HashCode>
+      <FileName>Persona.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Sexo" />
+      <Property Name="EstadoCivil" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Prog_III_2020_2_sesion_1.Vendedor">
+    <Position X="6.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYggEASAAAAAAAAAAAgAAAAAAEMAAAAAAAAAAAgAAI=</HashCode>
+      <FileName>Vendedor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Prog_III_2020_2_sesion_1.Sexo">
+    <Position X="1.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Sexo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Prog_III_2020_2_sesion_1.EstadoCivil">
+    <Position X="1.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAAAAAAAEAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>EstadoCivil.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

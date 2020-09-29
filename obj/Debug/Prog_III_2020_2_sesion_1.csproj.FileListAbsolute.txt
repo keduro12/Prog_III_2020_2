@@ -1,0 +1,14 @@
+C:\Users\57316\source\repos\Prog_III_2020_2_sesion_1\bin\Debug\Prog_III_2020_2_sesion_1.exe.config
+C:\Users\57316\source\repos\Prog_III_2020_2_sesion_1\bin\Debug\Prog_III_2020_2_sesion_1.exe
+C:\Users\57316\source\repos\Prog_III_2020_2_sesion_1\bin\Debug\Prog_III_2020_2_sesion_1.pdb
+C:\Users\57316\source\repos\Prog_III_2020_2_sesion_1\obj\Debug\Prog_III_2020_2_sesion_1.csprojAssemblyReference.cache
+C:\Users\57316\source\repos\Prog_III_2020_2_sesion_1\obj\Debug\Prog_III_2020_2_sesion_1.csproj.CoreCompileInputs.cache
+C:\Users\57316\source\repos\Prog_III_2020_2_sesion_1\obj\Debug\Prog_III_2020_2_sesion_1.exe
+C:\Users\57316\source\repos\Prog_III_2020_2_sesion_1\obj\Debug\Prog_III_2020_2_sesion_1.pdb
+D:\Documentos\UPC\Programación III\Prog_III_2020_2_sesion_1\bin\Debug\Prog_III_2020_2_sesion_1.exe.config
+D:\Documentos\UPC\Programación III\Prog_III_2020_2_sesion_1\bin\Debug\Prog_III_2020_2_sesion_1.exe
+D:\Documentos\UPC\Programación III\Prog_III_2020_2_sesion_1\bin\Debug\Prog_III_2020_2_sesion_1.pdb
+D:\Documentos\UPC\Programación III\Prog_III_2020_2_sesion_1\obj\Debug\Prog_III_2020_2_sesion_1.csprojAssemblyReference.cache
+D:\Documentos\UPC\Programación III\Prog_III_2020_2_sesion_1\obj\Debug\Prog_III_2020_2_sesion_1.csproj.CoreCompileInputs.cache
+D:\Documentos\UPC\Programación III\Prog_III_2020_2_sesion_1\obj\Debug\Prog_III_2020_2_sesion_1.exe
+D:\Documentos\UPC\Programación III\Prog_III_2020_2_sesion_1\obj\Debug\Prog_III_2020_2_sesion_1.pdb
