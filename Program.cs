@@ -9,7 +9,9 @@ namespace Prog_III_2020_2_sesion_1
     class Program
     {
         public static void Main(string[] args)
-        {  
+        {
+
+            Vendedor.MenuAdminVendedor();
 
             Console.Read();
             

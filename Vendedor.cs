@@ -227,10 +227,10 @@ namespace Prog_III_2020_2_sesion_1
             return false;
         }
 
-        public static Vendedor Search(long CedVendedor = 0, int IdVendedor = 0, Int64 Telefono = 0)
+        public static Vendedor Search(long CedVendedor = 0, int IdVendedor = 0, int Telefono = 0)
         {
             foreach (Vendedor v in ListaVendedor)
-            {
+            {           
                 if (v.Cedula == CedVendedor | v.IdVendedor == IdVendedor | v.Telefono == Telefono)
                 {
                     return v;
@@ -315,13 +315,14 @@ namespace Prog_III_2020_2_sesion_1
 
             do
             {
-                Console.WriteLine("\tBienvenido al menú de Vendedores\n" +
+                Console.Write("\tBienvenido al menú de Vendedores\n" +
                     "\t1. Crear vendedor.\n" +
                     "\t2. Eliminar vendedor.\n" +
                     "\t3. Editar vendedor.\n" +
                     "\t4. Listar vendedores.\n" +
                     "\t5. Busacar vendedor.\n" +
-                    "\t6. Salir.\n");
+                    "\t6. Salir.\n" +
+                    "\t:: ");
                 
                 option = Scanner.NextInt();
 
@@ -452,13 +453,18 @@ namespace Prog_III_2020_2_sesion_1
                                 break;
                         }
                         break;
-                    default:
-                        Console.WriteLine("¡Oooops, ha ocurrido un error!");
-                        break;
+                    //default:
+                    //    Console.WriteLine("¡Oooops, ha ocurrido un error!");
+                    //    break;
                         
                 }
 
             } while (option != 6);
+        }
+
+        public void MenuVendedor()
+        {
+
         }
     }
 }
