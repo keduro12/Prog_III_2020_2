@@ -288,6 +288,13 @@ namespace Prog_III_2020_2_sesion_1
         public static void LoadList()
         {
             ListaVendedor = new List<Vendedor>();
+
+            //Type type = ListaVendedor.GetType();
+            //var obj = Activator.CreateInstance(type) as object;
+            //var obj1 = ListaVendedor[0];
+            //obj1.
+    
+
             System.IO.StreamReader reader = new System.IO.StreamReader("Vendedor.txt");
 
             while (!reader.EndOfStream)
