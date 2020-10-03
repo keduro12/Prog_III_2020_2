@@ -1,0 +1,2 @@
+1,a1b1c1,S,Azul,Tesla,Biodiesel,Automatica
+2,a2b1c1,X,Verde,Tesla,Biodiesel,Automatica

@@ -104,36 +104,36 @@ namespace Prog_III_2020_2_sesion_1
                 switch (NDato) 
                 {
                     case 1:
-                        Console.Write("Nueva Cedula: ");
+                        Console.Write("\nNueva Cedula: ");
                         v.Cedula = Scanner.NextLong();
                         break;
                     case 2:
-                        Console.Write("Nuevo Nombre: ");
+                        Console.Write("\nNuevo Nombre: ");
                         v.Nombre = Scanner.NextLine();
                         break;
                     case 3:
-                        Console.Write("Nueva Fecha de nacimiento dd/MM/yyy");
+                        Console.Write("\nNueva Fecha de nacimiento dd/MM/yyy");
                         v.FechaNacimiento = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
                         break;
                     case 4:
-                        Console.Write("Nuevo Sexo\n1. Femenino.\n2. Masculino.\n::");
+                        Console.Write("\nNuevo Sexo\n1. Femenino.\n2. Masculino.\n::");
                         if (Scanner.NextInt() == 1) v.Sexo = Sexo.Femnino;
                         else v.Sexo = Sexo.Masculino;
                         break;
                     case 5:
-                        Console.Write("Nuevo Teléfono: ");
+                        Console.Write("\nNuevo Teléfono: ");
                         v.Telefono = Scanner.NextLong();
                         break;
                     case 6:
-                        Console.Write("Nuevo Correo: ");
+                        Console.Write("\nNuevo Correo: ");
                         v.Correo = Scanner.NextLine();
                         break;
                     case 7:
-                        Console.Write("Nueva Dirección: ");
+                        Console.Write("\nNueva Dirección: ");
                         v.Direccion = Scanner.NextLine();
                         break;
                     case 8:
-                        Console.Write("Nuevo Estado civil\n1. Soltero.\n2. Casado.\n3. Viudo.\n4. Divorciado.\n5. Union libre.\n:: ");
+                        Console.Write("\nNuevo Estado civil\n1. Soltero.\n2. Casado.\n3. Viudo.\n4. Divorciado.\n5. Union libre.\n:: ");
                         int estado = Scanner.NextInt();
                         for (int i = 0; i < 5; i++)
                         {
@@ -145,19 +145,19 @@ namespace Prog_III_2020_2_sesion_1
                         }
                         break;
                     case 9:
-                        Console.Write("Nueva Fecha de ingreso dd/MM/yyy");
+                        Console.Write("\nNueva Fecha de ingreso dd/MM/yyy");
                         v.FechaIngreso = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
                         break;
                     case 10:
-                        Console.Write("Nuevo Salario: ");
+                        Console.Write("\nNuevo Salario: ");
                         v.Salario = Scanner.NextInt();
                         break;
                     case 11:
-                        Console.Write("Nueva Profesión: ");
+                        Console.Write("\nNueva Profesión: ");
                         v.Profesion = Scanner.NextLine();
                         break;
                     case 12:
-                        Console.Write("Nueva Calificación de 1 a 10: ");
+                        Console.Write("\nNueva Calificación de 1 a 10: ");
                         v.Calificacion = Scanner.NextInt();
                         break;
                 }
@@ -288,41 +288,37 @@ namespace Prog_III_2020_2_sesion_1
         public static void LoadList()
         {
             ListaVendedor = new List<Vendedor>();
-
-            //Type type = ListaVendedor.GetType();
-            //var obj = Activator.CreateInstance(type) as object;
-            //var obj1 = ListaVendedor[0];
-            //obj1.
-    
-
-            System.IO.StreamReader reader = new System.IO.StreamReader("Vendedor.txt");
-
-            while (!reader.EndOfStream)
+            if (System.IO.File.Exists("Vendedor.txt"))
             {
-                string[] var = reader.ReadLine().Split(',');
+                System.IO.StreamReader reader = new System.IO.StreamReader("Vendedor.txt");
 
-                Vendedor v = new Vendedor();
-                for (int i = 0; i < var.Length; i++)
+                while (!reader.EndOfStream)
                 {
-                    v.SetItems(i, var[i]);
+                    string[] var = reader.ReadLine().Split(',');
+
+                    Vendedor v = new Vendedor();
+                    for (int i = 0; i < var.Length; i++)
+                    {
+                        v.SetItems(i, var[i]);
+                    }
+
+                    ListaVendedor.Add(v);
+
                 }
 
-                ListaVendedor.Add(v);
-
+                reader.Close();
             }
-            
-            reader.Close();
         }
 
         public static void MenuAdminVendedor()
         {
             int option;
-
+            
             LoadList();
 
             do
             {
-                Console.Write("\tBienvenido al menú de Vendedores\n" +
+                Console.Write("\n\tBienvenido al menú de Vendedores\n" +
                     "\t1. Crear vendedor.\n" +
                     "\t2. Eliminar vendedor.\n" +
                     "\t3. Editar vendedor.\n" +
@@ -336,32 +332,33 @@ namespace Prog_III_2020_2_sesion_1
                 switch (option)
                 {
                     case 1:
-                        Console.WriteLine("\t-- Crear vendedor ---");
+                        Console.Clear();
+                        Console.WriteLine("\n\t-- Crear vendedor ---");
                         Vendedor v = new Vendedor();
 
-                        Console.Write("Cedula: ");
+                        Console.Write("\nCedula: ");
                         v.Cedula = Scanner.NextLong();
 
-                        Console.Write("Nombre: ");
+                        Console.Write("\nNombre: ");
                         v.Nombre = Scanner.NextLine();
 
-                        Console.Write("Fecha de nacimiento dd/MM/yyy");
+                        Console.Write("\nFecha de nacimiento dd/MM/yyy");
                         v.FechaNacimiento = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
 
-                        Console.Write("Sexo\n1. Femenino.\n2. Masculino.\n::");
+                        Console.Write("\nSexo\n1. Femenino.\n2. Masculino.\n::");
                         if (Scanner.NextInt() == 1) v.Sexo = Sexo.Femnino;
                         else v.Sexo = Sexo.Masculino;
 
-                        Console.Write("Teléfono: ");
+                        Console.Write("\nTeléfono: ");
                         v.Telefono = Scanner.NextLong();
 
-                        Console.Write("Correo: ");
+                        Console.Write("\nCorreo: ");
                         v.Correo = Scanner.NextLine();
 
-                        Console.Write("Dirección: ");
+                        Console.Write("\nDirección: ");
                         v.Direccion = Scanner.NextLine();
 
-                        Console.Write("Estado civil\n1. Soltero.\n2. Casado.\n3. Viudo.\n4. Divorciado.\n5. Union libre.\n:: ");
+                        Console.Write("\nEstado civil\n1. Soltero.\n2. Casado.\n3. Viudo.\n4. Divorciado.\n5. Union libre.\n:: ");
                         int estado = Scanner.NextInt();
                         for (int i = 0; i < 5; i++)
                         {
@@ -372,49 +369,56 @@ namespace Prog_III_2020_2_sesion_1
                             };
                         }
 
-                        v.IdVendedor = ListaVendedor.Last().IdVendedor + 1;
+                        
 
-                        Console.Write("Fecha de ingreso dd/MM/yyy");
+                        Console.Write("\nFecha de ingreso dd/MM/yyy");
                         v.FechaIngreso = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
 
-                        Console.Write("Salario: ");
+                        Console.Write("\nSalario: ");
                         v.Salario = Scanner.NextInt();
 
-                        Console.Write("Profesión: ");
+                        Console.Write("\nProfesión: ");
                         v.Profesion = Scanner.NextLine();
 
-                        Console.Write("Calificación de 1 a 10: ");
+                        Console.Write("\nCalificación de 1 a 10: ");
                         v.Calificacion = Scanner.NextInt();
+
+                        if (ListaVendedor.Count != 0)
+                            v.IdVendedor = ListaVendedor.Last().IdVendedor + 1;
+                        else
+                            v.IdVendedor = 1;
+                        
 
                         v.Add();
 
                         break;
 
                     case 2:
-                        Console.Write("\t--- Eliminar vendedor ---\nNúmero de cédula del Vendedor: ");
+                        Console.Clear();
+                        Console.Write("\n\t--- Eliminar vendedor ---\nNúmero de cédula del Vendedor: ");
                         Int64 NCVendedor = Scanner.NextLong();
 
                         if (Find(NCVendedor))
                         {
                             Vendedor vn = Search(NCVendedor);
                             vn.Show();
-                            Console.Write("¿Borrar Vendedor?\n\t1. Si.\n\t2. No.\n::");
+                            Console.Write("\n¿Borrar Vendedor?\n\t1. Si.\n\t2. No.\n::");
                             if (Scanner.NextInt() == 1)
                             {
                                 vn.Delete();
-                                Console.WriteLine("¡Proceso realizado con éxito!");
+                                Console.WriteLine("\n¡Proceso realizado con éxito!");
                             }
-                            else Console.WriteLine("¡Proceso cancelado!");
+                            else Console.WriteLine("\n¡Proceso cancelado!");
 
                         }
 
                         break;
                     case 3:
-
-                        Console.Write("\t--- Editar datos del Vendedor ---\nNúmero de cédula del Vendedor: ");
+                        Console.Clear();
+                        Console.Write("\n\t--- Editar datos del Vendedor ---\nNúmero de cédula del Vendedor: ");
                         Int64 NCedVendedor = Scanner.NextLong();
                         Search(NCedVendedor).Show();
-                        Console.Write("\tOpciones a editar:\n" +
+                        Console.Write("\n\tOpciones a editar:\n" +
                            "\t1.  Cédula.\n" +
                            "\t2.  Nombre.\n" +
                            "\t3.  Fecha de nacimiento.\n" +
@@ -433,13 +437,15 @@ namespace Prog_III_2020_2_sesion_1
 
                         break;
                     case 4:
-                        Console.WriteLine("\t-- Lista de vendedores ---");
+                        Console.Clear();
+                        Console.WriteLine("\n\t-- Lista de vendedores ---");
                         ToList();
                         break;
 
                     case 5:
-                        Console.WriteLine("\t-- Buscar vendedor ---\n");
-                        Console.WriteLine("Seleccione el método de busqueda: " +
+                        Console.Clear();
+                        Console.WriteLine("\n\t-- Buscar vendedor ---");
+                        Console.WriteLine("\nSeleccione el método de busqueda\n" +
                             "\t1. Por número de cédula.\n" +
                             "\t2. Por número de identificación.\n" +
                             "\t3. Por número de teléfono.\n" +
@@ -447,15 +453,15 @@ namespace Prog_III_2020_2_sesion_1
                         switch (Scanner.NextInt())
                         {
                             case 1:
-                                Console.Write("\tCédula: ");
+                                Console.Write("\n\tCédula: ");
                                 Search(Scanner.NextLong()).Show();
                                 break;
                             case 2: 
-                                Console.Write("\tIdentificación: ");
+                                Console.Write("\n\tIdentificación: ");
                                 Search(0, Scanner.NextInt()).Show();
                                 break;
                             case 3:
-                                Console.Write("\tTeléfono: ");
+                                Console.Write("\n\tTeléfono: ");
                                 Search(0, 0, Scanner.NextInt()).Show();
                                 break;
                         }
@@ -467,11 +473,6 @@ namespace Prog_III_2020_2_sesion_1
                 }
 
             } while (option != 6);
-        }
-
-        public void MenuVendedor()
-        {
-
         }
     }
 }

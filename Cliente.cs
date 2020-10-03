@@ -222,24 +222,26 @@ namespace Prog_III_2020_2_sesion_1
         public static void LoadList()
         {
             ListaClientes = new List<Cliente>();
-
-            System.IO.StreamReader reader = new System.IO.StreamReader("Cliente.txt");
-
-            while (!reader.EndOfStream)
+            if (System.IO.File.Exists("Cliente.txt"))
             {
-                string[] var = reader.ReadLine().Split(',');
+                System.IO.StreamReader reader = new System.IO.StreamReader("Cliente.txt");
 
-                Cliente v = new Cliente();
-                for (int i = 0; i < var.Length; i++)
+                while (!reader.EndOfStream)
                 {
-                    v.SetItems(i, var[i]);
+                    string[] var = reader.ReadLine().Split(',');
+
+                    Cliente v = new Cliente();
+                    for (int i = 0; i < var.Length; i++)
+                    {
+                        v.SetItems(i, var[i]);
+                    }
+
+                    ListaClientes.Add(v);
+
                 }
 
-                ListaClientes.Add(v);
-
+                reader.Close();
             }
-
-            reader.Close();
         }
 
         public static void MenuClientes()
@@ -264,6 +266,7 @@ namespace Prog_III_2020_2_sesion_1
                 switch (option)
                 {
                     case 1:
+                        Console.Clear();
                         Console.WriteLine("\t-- Crear clientes ---");
                         Cliente v = new Cliente();
 
@@ -299,14 +302,17 @@ namespace Prog_III_2020_2_sesion_1
 
                             };
                         }
-
-                        v.IdCliente = ListaClientes.Last().IdCliente + 1;
+                        if (ListaClientes.Count != 0)
+                            v.IdCliente = ListaClientes.Last().IdCliente + 1;
+                        else
+                            v.IdCliente = 1;
 
                         v.Add();
 
                         break;
 
                     case 2:
+                        Console.Clear();
                         Console.Write("\t--- Eliminar clientes ---\nNúmero de cédula del clientes: ");
                         Int64 NCClientes = Scanner.NextLong();
 
@@ -326,7 +332,7 @@ namespace Prog_III_2020_2_sesion_1
 
                         break;
                     case 3:
-
+                        Console.Clear();
                         Console.Write("\t--- Editar datos del cliente ---\nNúmero de cédula del cliente: ");
                         Int64 NCedclientes = Scanner.NextLong();
                         Search(NCedclientes).Show();
@@ -345,11 +351,13 @@ namespace Prog_III_2020_2_sesion_1
 
                         break;
                     case 4:
+                        Console.Clear();
                         Console.WriteLine("\t-- Lista de clientes ---");
                         ToList();
                         break;
 
                     case 5:
+                        Console.Clear();
                         Console.WriteLine("\t-- Buscar cliente ---\n");
                         Console.WriteLine("Seleccione el método de busqueda: " +
                             "\t1. Por número de cédula.\n" +

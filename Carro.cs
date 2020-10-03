@@ -73,25 +73,25 @@ namespace Prog_III_2020_2_sesion_1
                 switch (NDato)
                 {
                     case 1:
-                        Console.WriteLine("Nuevo Número de Chasis: ");
+                        Console.WriteLine("\nNuevo Número de Chasis: ");
                         v.VIN = Scanner.NextLine();
                         break;
 
                     case 2:
-                        Console.Write("Nueva Modelo: ");
+                        Console.Write("\nNueva Modelo: ");
                         v.Modelo = Scanner.NextLine();
                         break;
                     case 3:
-                        Console.Write("Nuevo Color: ");
+                        Console.Write("\nNuevo Color: ");
                         v.Color = Scanner.NextLine();
                         break;
                     case 4:
-                        Console.Write("Nuevo Marca: ");
+                        Console.Write("\nNuevo Marca: ");
                         v.Marca = Scanner.NextLine();
                         break;
 
                     case 5:
-                        Console.Write("Nuevo Combustible\n1. Gasolina.\n2. Biodiésel.\n3. Gas Natural.\n4. Diésel.\n:: ");
+                        Console.Write("\nNuevo Combustible\n1. Gasolina.\n2. Biodiésel.\n3. Gas Natural.\n4. Diésel.\n:: ");
                         int tipo = Scanner.NextInt();
                         for (int i = 0; i < 4; i++)
                         {
@@ -103,7 +103,7 @@ namespace Prog_III_2020_2_sesion_1
                         }
                         break;
                     case 6:
-                        Console.Write("Nueva Transmisión\n1. Manual.\n2. Automatica.\n3. CVT.\n:: ");
+                        Console.Write("\nNueva Transmisión\n1. Manual.\n2. Automatica.\n3. CVT.\n:: ");
                         int transmision = Scanner.NextInt();
                         for (int i = 0; i < 3; i++)
                         {
@@ -151,7 +151,8 @@ namespace Prog_III_2020_2_sesion_1
         /// </summary>
         public void Show()
         {
-            Console.WriteLine(IdCarro.ToString() + VIN + Modelo + Color + Marca + TipoCombustible.ToString() + TipoTransmision.ToString());
+            Console.WriteLine(IdCarro.ToString().PadRight(4) + VIN.PadRight(5) + Modelo.PadRight(10) + Color.PadRight(10) + 
+                Marca.PadRight(10) + TipoCombustible.ToString().PadRight(10) + TipoTransmision.ToString());
         }
 
         public override string ToString()
@@ -233,24 +234,26 @@ namespace Prog_III_2020_2_sesion_1
         public static void LoadList()
         {
             ListaCarros = new List<Carro>();
-
-            System.IO.StreamReader reader = new System.IO.StreamReader("Carro.txt");
-
-            while (!reader.EndOfStream)
+            if (System.IO.File.Exists("Carro.txt"))
             {
-                string[] var = reader.ReadLine().Split(',');
+                System.IO.StreamReader reader = new System.IO.StreamReader("Carro.txt");
 
-                Carro v = new Carro();
-                for (int i = 0; i < var.Length; i++)
+                while (!reader.EndOfStream)
                 {
-                    v.SetItems(i, var[i]);
+                    string[] var = reader.ReadLine().Split(',');
+
+                    Carro v = new Carro();
+                    for (int i = 0; i < var.Length; i++)
+                    {
+                        v.SetItems(i, var[i]);
+                    }
+
+                    ListaCarros.Add(v);
+
                 }
 
-                ListaCarros.Add(v);
-
+                reader.Close();
             }
-
-            reader.Close();
         }
 
         public static void MenuCarro()
@@ -261,7 +264,7 @@ namespace Prog_III_2020_2_sesion_1
 
             do
             {
-                Console.Write("\tBienvenido al menú de Carros\n" +
+                Console.Write("\n\tBienvenido al menú de Carros\n" +
                     "\t1. Crear Carro.\n" +
                     "\t2. Eliminar Carro.\n" +
                     "\t3. Editar Carro.\n" +
@@ -275,22 +278,23 @@ namespace Prog_III_2020_2_sesion_1
                 switch (option)
                 {
                     case 1:
-                        Console.WriteLine("\t-- Crear Carro ---");
+                        Console.Clear();
+                        Console.WriteLine("\n\t-- Crear Carro ---");
                         Carro v = new Carro();
 
-                        Console.Write("Código de chasis: ");
+                        Console.Write("\nCódigo de chasis: ");
                         v.VIN = Scanner.NextLine();
 
-                        Console.Write("Modelo: ");
-                        v.Marca = Scanner.NextLine();
+                        Console.Write("\nModelo: ");
+                        v.Modelo = Scanner.NextLine();
 
-                        Console.Write("Color: ");
+                        Console.Write("\nColor: ");
                         v.Color = Scanner.NextLine();
 
-                        Console.Write("Marca: ");
+                        Console.Write("\nMarca: ");
                         v.Marca = Scanner.NextLine();
 
-                        Console.Write("Combustible\n1. Gasolina.\n2. Biodiésel.\n3. Gas Natural.\n4. Diésel.\n:: ");
+                        Console.Write("\nCombustible\n1. Gasolina.\n2. Biodiésel.\n3. Gas Natural.\n4. Diésel.\n:: ");
                         int tipo = Scanner.NextInt();
                         for (int i = 0; i < 4; i++)
                         {
@@ -301,7 +305,7 @@ namespace Prog_III_2020_2_sesion_1
                             };
                         }
 
-                        Console.Write("Nueva Transmisión\n1. Manual.\n2. Automatica.\n3. CVT.\n:: ");
+                        Console.Write("\nTransmisión\n1. Manual.\n2. Automatica.\n3. CVT.\n:: ");
                         int transmision = Scanner.NextInt();
                         for (int i = 0; i < 3; i++)
                         {
@@ -310,33 +314,41 @@ namespace Prog_III_2020_2_sesion_1
                                 v.TipoTransmision = (Transmision)i;
                             };
                         }
+                        if (ListaCarros.Count != 0)
+                            v.IdCarro = ListaCarros.Last().IdCarro + 1;
+                        else
+                            v.IdCarro = 1;
+
+                        v.Show();
+                        v.Add();
                         break;
 
                     case 2:
-                        Console.Write("\t--- Eliminar Carro ---\nCódigo de chasis del Carro: ");
+                        Console.Clear();
+                        Console.Write("\n\t--- Eliminar Carro ---\nCódigo de chasis del Carro: ");
                         string VIN = Scanner.NextLine();
 
                         if (Find(VIN))
                         {
                             Carro vn = Search(VIN);
                             vn.Show();
-                            Console.Write("¿Borrar Carro?\n\t1. Si.\n\t2. No.\n::");
+                            Console.Write("\n¿Borrar Carro?\n\t1. Si.\n\t2. No.\n::");
                             if (Scanner.NextInt() == 1)
                             {
                                 vn.Delete();
-                                Console.WriteLine("¡Proceso realizado con éxito!");
+                                Console.WriteLine("\n¡Proceso realizado con éxito!");
                             }
-                            else Console.WriteLine("¡Proceso cancelado!");
+                            else Console.WriteLine("\n¡Proceso cancelado!");
 
                         }
 
                         break;
                     case 3:
-
-                        Console.Write("\t--- Editar datos del Carro ---\nNúmero de ID del Carro: ");
+                        Console.Clear();
+                        Console.Write("\n\t--- Editar datos del Carro ---\nNúmero de ID del Carro: ");
                         int IdCarro  = Scanner.NextInt();
                         Search(IdCarro).Show();
-                        Console.Write("\tOpciones a editar:\n" +
+                        Console.Write("\n\tOpciones a editar:\n" +
                            "\t1.  Cédula.\n" +
                            "\t2.  Nombre.\n" +
                            "\t3.  Fecha de nacimiento.\n" +
@@ -351,14 +363,16 @@ namespace Prog_III_2020_2_sesion_1
 
                         break;
                     case 4:
-                        Console.WriteLine("\t-- Lista de Carro ---");
+                        Console.Clear();
+                        Console.WriteLine("\n\t-- Lista de Carro ---\n");
                         ToList();
                         break;
 
                     case 5:
-                        Console.WriteLine("\t-- Buscar Carro ---\n");
+                        Console.Clear();
+                        Console.WriteLine("\n\t-- Buscar Carro ---\n");
 
-                        Console.Write("Ingrese el ID del carro.\n:: ");
+                        Console.Write("\nIngrese el ID del carro.\n:: ");
                         Search(Scanner.NextInt()).Show();
                         break;
                 }
