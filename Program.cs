@@ -12,8 +12,8 @@ namespace Prog_III_2020_2_sesion_1
         {
 
             //Vendedor.MenuAdminVendedor();
-            //Cliente.MenuClientes();
-            Carro.MenuCarro();
+            Cliente.MenuClientes();
+            //Carro.MenuCarro();
 
             Console.Read();
             

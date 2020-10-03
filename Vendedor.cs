@@ -116,7 +116,7 @@ namespace Prog_III_2020_2_sesion_1
                         v.FechaNacimiento = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
                         break;
                     case 4:
-                        Console.Write("\nNuevo Sexo\n1. Femenino.\n2. Masculino.\n::");
+                        Console.Write("\nNuevo Sexo\n1. Femenino.\n2. Masculino.\n:: ");
                         if (Scanner.NextInt() == 1) v.Sexo = Sexo.Femnino;
                         else v.Sexo = Sexo.Masculino;
                         break;
@@ -342,10 +342,10 @@ namespace Prog_III_2020_2_sesion_1
                         Console.Write("\nNombre: ");
                         v.Nombre = Scanner.NextLine();
 
-                        Console.Write("\nFecha de nacimiento dd/MM/yyy");
-                        v.FechaNacimiento = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
+                        Console.Write("\nFecha de nacimiento dd/MM/yyy: ");
+                        v.FechaNacimiento = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
 
-                        Console.Write("\nSexo\n1. Femenino.\n2. Masculino.\n::");
+                        Console.Write("\nSexo\n1. Femenino.\n2. Masculino.\n:: ");
                         if (Scanner.NextInt() == 1) v.Sexo = Sexo.Femnino;
                         else v.Sexo = Sexo.Masculino;
 
@@ -371,7 +371,7 @@ namespace Prog_III_2020_2_sesion_1
 
                         
 
-                        Console.Write("\nFecha de ingreso dd/MM/yyy");
+                        Console.Write("\nFecha de ingreso dd/MM/yyy: ");
                         v.FechaIngreso = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
 
                         Console.Write("\nSalario: ");
@@ -438,14 +438,14 @@ namespace Prog_III_2020_2_sesion_1
                         break;
                     case 4:
                         Console.Clear();
-                        Console.WriteLine("\n\t-- Lista de vendedores ---");
+                        Console.WriteLine("\n\t-- Lista de vendedores ---\n");
                         ToList();
                         break;
 
                     case 5:
                         Console.Clear();
                         Console.WriteLine("\n\t-- Buscar vendedor ---");
-                        Console.WriteLine("\nSeleccione el método de busqueda\n" +
+                        Console.Write("\nSeleccione el método de busqueda\n" +
                             "\t1. Por número de cédula.\n" +
                             "\t2. Por número de identificación.\n" +
                             "\t3. Por número de teléfono.\n" +
@@ -466,9 +466,6 @@ namespace Prog_III_2020_2_sesion_1
                                 break;
                         }
                         break;
-                    //default:
-                    //    Console.WriteLine("¡Oooops, ha ocurrido un error!");
-                    //    break;
                         
                 }
 

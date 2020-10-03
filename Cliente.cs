@@ -67,36 +67,36 @@ namespace Prog_III_2020_2_sesion_1
                 switch (NDato)
                 {
                     case 1:
-                        Console.Write("Nueva Cedula: ");
+                        Console.Write("\nNueva Cedula: ");
                         v.Cedula = Scanner.NextLong();
                         break;
                     case 2:
-                        Console.Write("Nuevo Nombre: ");
+                        Console.Write("\nNuevo Nombre: ");
                         v.Nombre = Scanner.NextLine();
                         break;
                     case 3:
-                        Console.Write("Nueva Fecha de nacimiento dd/MM/yyy");
+                        Console.Write("\nNueva Fecha de nacimiento dd/MM/yyy: ");
                         v.FechaNacimiento = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
                         break;
                     case 4:
-                        Console.Write("Nuevo Sexo\n1. Femenino.\n2. Masculino.\n::");
+                        Console.Write("\nNuevo Sexo\n1. Femenino.\n2. Masculino.\n:: ");
                         if (Scanner.NextInt() == 1) v.Sexo = Sexo.Femnino;
                         else v.Sexo = Sexo.Masculino;
                         break;
                     case 5:
-                        Console.Write("Nuevo Teléfono: ");
+                        Console.Write("\nNuevo Teléfono: ");
                         v.Telefono = Scanner.NextLong();
                         break;
                     case 6:
-                        Console.Write("Nuevo Correo: ");
+                        Console.Write("\nNuevo Correo: ");
                         v.Correo = Scanner.NextLine();
                         break;
                     case 7:
-                        Console.Write("Nueva Dirección: ");
+                        Console.Write("\nNueva Dirección: ");
                         v.Direccion = Scanner.NextLine();
                         break;
                     case 8:
-                        Console.Write("Nuevo Estado civil\n1. Soltero.\n2. Casado.\n3. Viudo.\n4. Divorciado.\n5. Union libre.\n:: ");
+                        Console.Write("\nNuevo Estado civil\n1. Soltero.\n2. Casado.\n3. Viudo.\n4. Divorciado.\n5. Union libre.\n:: ");
                         int estado = Scanner.NextInt();
                         for (int i = 0; i < 5; i++)
                         {
@@ -173,7 +173,7 @@ namespace Prog_III_2020_2_sesion_1
             return false;
         }
 
-        public static Cliente Search(long CedCliente = 0, int IdCliente = 0, int Telefono = 0)
+        public static Cliente Search(long CedCliente = 0, int IdCliente = 0, long Telefono = 0)
         {
             foreach (Cliente v in ListaClientes)
             {
@@ -196,7 +196,7 @@ namespace Prog_III_2020_2_sesion_1
                     Nombre = (string)value;
                     break;
                 case 2:
-                    FechaNacimiento = DateTime.ParseExact(value, "d/MM/yyyy", null);
+                    FechaNacimiento = DateTime.ParseExact(value, "dd/MM/yyyy", null);
                     break;
                 case 3:
                     Sexo = (Sexo)Sexo.Parse(typeof(Sexo), value.ToString());
@@ -252,7 +252,7 @@ namespace Prog_III_2020_2_sesion_1
 
             do
             {
-                Console.Write("\tBienvenido al menú de clienteses\n" +
+                Console.Write("\n\tBienvenido al menú de clienteses\n" +
                     "\t1. Crear clientes.\n" +
                     "\t2. Eliminar clientes.\n" +
                     "\t3. Editar clientes.\n" +
@@ -267,32 +267,32 @@ namespace Prog_III_2020_2_sesion_1
                 {
                     case 1:
                         Console.Clear();
-                        Console.WriteLine("\t-- Crear clientes ---");
+                        Console.WriteLine("\n\t-- Crear clientes ---");
                         Cliente v = new Cliente();
 
-                        Console.Write("Cedula: ");
+                        Console.Write("\nCedula: ");
                         v.Cedula = Scanner.NextLong();
 
-                        Console.Write("Nombre: ");
+                        Console.Write("\nNombre: ");
                         v.Nombre = Scanner.NextLine();
 
-                        Console.Write("Fecha de nacimiento dd/MM/yyy");
+                        Console.Write("\nFecha de nacimiento dd/MM/yyy: ");
                         v.FechaNacimiento = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
 
-                        Console.Write("Sexo\n1. Femenino.\n2. Masculino.\n::");
+                        Console.Write("\nSexo\n1. Femenino.\n2. Masculino.\n:: ");
                         if (Scanner.NextInt() == 1) v.Sexo = Sexo.Femnino;
                         else v.Sexo = Sexo.Masculino;
 
-                        Console.Write("Teléfono: ");
+                        Console.Write("\nTeléfono: ");
                         v.Telefono = Scanner.NextLong();
 
-                        Console.Write("Correo: ");
+                        Console.Write("\nCorreo: ");
                         v.Correo = Scanner.NextLine();
 
-                        Console.Write("Dirección: ");
+                        Console.Write("\nDirección: ");
                         v.Direccion = Scanner.NextLine();
 
-                        Console.Write("Estado civil\n1. Soltero.\n2. Casado.\n3. Viudo.\n4. Divorciado.\n5. Union libre.\n:: ");
+                        Console.Write("\nEstado civil\n1. Soltero.\n2. Casado.\n3. Viudo.\n4. Divorciado.\n5. Union libre.\n:: ");
                         int estado = Scanner.NextInt();
                         for (int i = 0; i < 5; i++)
                         {
@@ -302,9 +302,10 @@ namespace Prog_III_2020_2_sesion_1
 
                             };
                         }
-                        if (ListaClientes.Count != 0)
+
+                        if (ListaClientes.Count != 0) //Si la lista no esta vacia le asigan el id del último + 1
                             v.IdCliente = ListaClientes.Last().IdCliente + 1;
-                        else
+                        else //Si la lista esta vacia lo pone como el primero
                             v.IdCliente = 1;
 
                         v.Add();
@@ -313,30 +314,30 @@ namespace Prog_III_2020_2_sesion_1
 
                     case 2:
                         Console.Clear();
-                        Console.Write("\t--- Eliminar clientes ---\nNúmero de cédula del clientes: ");
+                        Console.Write("\n\t--- Eliminar clientes ---\nNúmero de cédula del clientes: ");
                         Int64 NCClientes = Scanner.NextLong();
 
                         if (Find(NCClientes))
                         {
                             Cliente vn = Search(NCClientes);
                             vn.Show();
-                            Console.Write("¿Borrar cliente?\n\t1. Si.\n\t2. No.\n::");
+                            Console.Write("\n¿Borrar cliente?\n\t1. Si.\n\t2. No.\n::");
                             if (Scanner.NextInt() == 1)
                             {
                                 vn.Delete();
-                                Console.WriteLine("¡Proceso realizado con éxito!");
+                                Console.WriteLine("\n¡Proceso realizado con éxito!");
                             }
-                            else Console.WriteLine("¡Proceso cancelado!");
+                            else Console.WriteLine("\n¡Proceso cancelado!");
 
                         }
 
                         break;
                     case 3:
                         Console.Clear();
-                        Console.Write("\t--- Editar datos del cliente ---\nNúmero de cédula del cliente: ");
-                        Int64 NCedclientes = Scanner.NextLong();
+                        Console.Write("\n\t--- Editar datos del cliente ---\n\nNúmero de cédula del cliente: ");
+                        long NCedclientes = Scanner.NextLong();
                         Search(NCedclientes).Show();
-                        Console.Write("\tOpciones a editar:\n" +
+                        Console.Write("\n\tOpciones a editar:\n" +
                            "\t1.  Cédula.\n" +
                            "\t2.  Nombre.\n" +
                            "\t3.  Fecha de nacimiento.\n" +
@@ -352,14 +353,14 @@ namespace Prog_III_2020_2_sesion_1
                         break;
                     case 4:
                         Console.Clear();
-                        Console.WriteLine("\t-- Lista de clientes ---");
+                        Console.WriteLine("\n\t-- Lista de clientes ---\n");
                         ToList();
                         break;
 
                     case 5:
                         Console.Clear();
-                        Console.WriteLine("\t-- Buscar cliente ---\n");
-                        Console.WriteLine("Seleccione el método de busqueda: " +
+                        Console.WriteLine("\n\t-- Buscar cliente ---\n");
+                        Console.Write("\nSeleccione el método de busqueda:\n " +
                             "\t1. Por número de cédula.\n" +
                             "\t2. Por número de identificación.\n" +
                             "\t3. Por número de teléfono.\n" +
@@ -367,16 +368,16 @@ namespace Prog_III_2020_2_sesion_1
                         switch (Scanner.NextInt())
                         {
                             case 1:
-                                Console.Write("\tCédula: ");
+                                Console.Write("\n\tCédula: ");
                                 Search(Scanner.NextLong()).Show();
                                 break;
                             case 2:
-                                Console.Write("\tIdentificación: ");
+                                Console.Write("\n\tIdentificación: ");
                                 Search(0, Scanner.NextInt()).Show();
                                 break;
                             case 3:
-                                Console.Write("\tTeléfono: ");
-                                Search(0, 0, Scanner.NextInt()).Show();
+                                Console.Write("\n\tTeléfono: ");
+                                Search(0, 0, Scanner.NextLong()).Show();
                                 break;
                         }
                         break;
