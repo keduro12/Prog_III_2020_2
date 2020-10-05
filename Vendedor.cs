@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.IO;
 
 namespace Prog_III_2020_2_sesion_1
 {
@@ -62,7 +63,7 @@ namespace Prog_III_2020_2_sesion_1
 
         private void Save()
         {
-            System.IO.StreamWriter writer = new System.IO.StreamWriter("Vendedor.txt", true);
+            System.IO.StreamWriter writer = new System.IO.StreamWriter("Files/Vendedor.txt", true);
 
             writer.WriteLine(Cedula.ToString() + "," + Nombre + "," + FechaNacimiento.ToShortDateString() + "," +
                 Sexo.ToString() + "," + Telefono.ToString() + "," + Correo + "," + Direccion + "," +
@@ -72,26 +73,62 @@ namespace Prog_III_2020_2_sesion_1
             writer.Close();
         }
 
-
-
-
-        public static void Delete(int idVendedor)
-        {
-            if (Find(idVendedor))
-            {
-                foreach (Vendedor v in ListaVendedor)
-                {
-                    if (v.IdVendedor == idVendedor)
-                        ListaVendedor.Remove(v);
-                }
-            }
-        }
-
         public void Delete()
         {
             if (Find(this.IdVendedor))
             {
                 ListaVendedor.Remove(this);
+            }
+        }
+
+        public static void Delete(object data)
+        {
+            using (StreamWriter fileWrite = new StreamWriter("Files/temp.txt",true))
+            {
+                using (StreamReader fielRead = new StreamReader("Files/Vendedor.txt"))
+                {
+                    String line;
+
+                    while ((line = fielRead.ReadLine()) != null)
+                    {
+                        string[] datos = line.Split(new char[] { ',' });
+                        string[] dateValues = (data.ToString()).Split('\t');
+                        if (datos[0].ToString() != dateValues[0].ToString())
+                        {
+                            fileWrite.WriteLine(line);
+                        }
+
+                    }
+                }
+            }
+
+            //aqui se renombrea el archivo temporal
+            File.Delete("Files/Vendedor.txt");
+            File.Move("Files/temp.txt", "Files/Vendedor.txt");
+        }
+        public static void Edit(int linea, int i, object data, string Archivo)
+        {
+            string[] All = File.ReadAllLines(Archivo);
+            string[] Lines = (All[linea]).Split(',');
+            string[] date = (data.ToString()).Split('\t');
+            Lines[i] = date[i];
+            string dataText = "";
+            for (int j = 0; j < Lines.Length; j++)
+            {
+                dataText += Lines[j];
+                if (j < Lines.Length) dataText += ",";
+            }
+
+            All[linea] = dataText;
+
+            File.WriteAllLines(Archivo, All);
+        }
+
+        public static void printVector(string[] v)
+        {
+            for (int i = 0; i < v.Length; i++)
+            {
+                Console.WriteLine(v[i]);
             }
         }
 
@@ -145,24 +182,28 @@ namespace Prog_III_2020_2_sesion_1
                         }
                         break;
                     case 9:
+                        NDato = 10;
                         Console.Write("\nNueva Fecha de ingreso dd/MM/yyy");
                         v.FechaIngreso = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
                         break;
                     case 10:
+                        NDato = 11;
                         Console.Write("\nNuevo Salario: ");
                         v.Salario = Scanner.NextInt();
                         break;
                     case 11:
+                        NDato = 12;
                         Console.Write("\nNueva Profesión: ");
                         v.Profesion = Scanner.NextLine();
                         break;
                     case 12:
+                        NDato = 13;
                         Console.Write("\nNueva Calificación de 1 a 10: ");
                         v.Calificacion = Scanner.NextInt();
                         break;
                 }
 
-                v.Save();
+                Edit(ListaVendedor.IndexOf(v), NDato-1, v, "Files/Vendedor.txt");
 
             }
             
@@ -288,9 +329,9 @@ namespace Prog_III_2020_2_sesion_1
         public static void LoadList()
         {
             ListaVendedor = new List<Vendedor>();
-            if (System.IO.File.Exists("Vendedor.txt"))
+            if (File.Exists("Files/Vendedor.txt"))
             {
-                System.IO.StreamReader reader = new System.IO.StreamReader("Vendedor.txt");
+                StreamReader reader = new StreamReader("Files/Vendedor.txt");
 
                 while (!reader.EndOfStream)
                 {
@@ -395,17 +436,20 @@ namespace Prog_III_2020_2_sesion_1
 
                     case 2:
                         Console.Clear();
-                        Console.Write("\n\t--- Eliminar vendedor ---\nNúmero de cédula del Vendedor: ");
+                        Console.Write("\n\t--- Eliminar vendedor ---\n\nNúmero de cédula del Vendedor: ");
                         Int64 NCVendedor = Scanner.NextLong();
 
                         if (Find(NCVendedor))
                         {
                             Vendedor vn = Search(NCVendedor);
+                            Console.WriteLine();
                             vn.Show();
-                            Console.Write("\n¿Borrar Vendedor?\n\t1. Si.\n\t2. No.\n::");
+                            Console.Write("\n¿Borrar Vendedor?\n\t1. Si.\n\t2. No.\n:: ");
                             if (Scanner.NextInt() == 1)
                             {
-                                vn.Delete();
+                                
+                                vn.Delete();                                
+                                Delete(vn);
                                 Console.WriteLine("\n¡Proceso realizado con éxito!");
                             }
                             else Console.WriteLine("\n¡Proceso cancelado!");

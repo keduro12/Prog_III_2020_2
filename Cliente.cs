@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Prog_III_2020_2_sesion_1
 {
@@ -26,7 +27,7 @@ namespace Prog_III_2020_2_sesion_1
 
         private void Save()
         {
-            System.IO.StreamWriter writer = new System.IO.StreamWriter("Cliente.txt", true);
+            System.IO.StreamWriter writer = new System.IO.StreamWriter("Files/Cliente.txt", true);
 
             writer.WriteLine(Cedula.ToString() + "," + Nombre + "," + FechaNacimiento.ToShortDateString() + "," +
                 Sexo.ToString() + "," + Telefono.ToString() + "," + Correo + "," + Direccion + "," +
@@ -35,27 +36,55 @@ namespace Prog_III_2020_2_sesion_1
             writer.Close();
         }
 
-
-
-
-        public static void Delete(int IdCliente)
-        {
-            if (Find(IdCliente))
-            {
-                foreach (Cliente v in ListaClientes)
-                {
-                    if (v.IdCliente == IdCliente)
-                        ListaClientes.Remove(v);
-                }
-            }
-        }
-
         public void Delete()
         {
             if (Find(this.IdCliente))
             {
                 ListaClientes.Remove(this);
             }
+        }
+
+        public static void Delete(object data)
+        {
+            using (StreamWriter fileWrite = new StreamWriter("Files/temp.txt", true))
+            {
+                using (StreamReader fielRead = new StreamReader("Files/Cliente.txt"))
+                {
+                    String line;
+
+                    while ((line = fielRead.ReadLine()) != null)
+                    {
+                        string[] datos = line.Split(new char[] { ',' });
+                        string[] dateValues = (data.ToString()).Split('\t');
+                        if (datos[0].ToString() != dateValues[0].ToString())
+                        {
+                            fileWrite.WriteLine(line);
+                        }
+
+                    }
+                }
+            }
+
+            //aqui se renombrea el archivo temporal
+            File.Delete("Files/Cliente.txt");
+            File.Move("Files/temp.txt", "Files/Cliente.txt");
+        }
+        public static void Edit(int linea, int i, object data, string Archivo)
+        {
+            string[] All = File.ReadAllLines(Archivo);
+            string[] Lines = (All[linea]).Split(',');
+            string[] date = (data.ToString()).Split('\t');
+            Lines[i] = date[i];
+            string dataText = "";
+            for (int j = 0; j < Lines.Length; j++)
+            {
+                dataText += Lines[j];
+                if (j < Lines.Length) dataText += ",";
+            }
+
+            All[linea] = dataText;
+
+            File.WriteAllLines(Archivo, All);
         }
 
         public static void Update(long CedCliente, int NDato)
@@ -109,7 +138,7 @@ namespace Prog_III_2020_2_sesion_1
                         break;
                 }
 
-                v.Save();
+                Edit(ListaClientes.IndexOf(v), NDato - 1, v, "Files/Cliente.txt");
 
             }
 
@@ -222,9 +251,9 @@ namespace Prog_III_2020_2_sesion_1
         public static void LoadList()
         {
             ListaClientes = new List<Cliente>();
-            if (System.IO.File.Exists("Cliente.txt"))
+            if (System.IO.File.Exists("Files/Cliente.txt"))
             {
-                System.IO.StreamReader reader = new System.IO.StreamReader("Cliente.txt");
+                System.IO.StreamReader reader = new System.IO.StreamReader("Files/Cliente.txt");
 
                 while (!reader.EndOfStream)
                 {
@@ -325,6 +354,7 @@ namespace Prog_III_2020_2_sesion_1
                             if (Scanner.NextInt() == 1)
                             {
                                 vn.Delete();
+                                Delete(vn);
                                 Console.WriteLine("\n¡Proceso realizado con éxito!");
                             }
                             else Console.WriteLine("\n¡Proceso cancelado!");

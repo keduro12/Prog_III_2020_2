@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Prog_III_2020_2_sesion_1
 {
@@ -11,13 +12,13 @@ namespace Prog_III_2020_2_sesion_1
     {
         public static List<Carro> ListaCarros;
 
-        public int IdCarro { get; set; }
         public string VIN { get; set; }
         public string Modelo { get; set; }
         public string Color { get; set; }
         public string Marca { get; set; }
         public Combustible TipoCombustible { get; set; }
         public Transmision TipoTransmision { get; set; }
+        public int IdCarro { get; set; }
 
         public void Add()
         {
@@ -33,27 +34,12 @@ namespace Prog_III_2020_2_sesion_1
 
         private void Save()
         {
-            System.IO.StreamWriter writer = new System.IO.StreamWriter("Carro.txt", true);
+            System.IO.StreamWriter writer = new System.IO.StreamWriter("Files/Carro.txt", true);
 
-            writer.WriteLine(IdCarro.ToString() + "," + VIN + "," + Modelo + "," + Color + "," + Marca + "," +
-                TipoCombustible.ToString() + "," + TipoTransmision.ToString());
+            writer.WriteLine(VIN + "," + Modelo + "," + Color + "," + Marca + "," +
+                TipoCombustible.ToString() + "," + TipoTransmision.ToString() + "," + IdCarro.ToString());
 
             writer.Close();
-        }
-
-
-
-
-        public static void Delete(int IdCarro)
-        {
-            if (Find(IdCarro))
-            {
-                foreach (Carro v in ListaCarros)
-                {
-                    if (v.IdCarro == IdCarro)
-                        ListaCarros.Remove(v);
-                }
-            }
         }
 
         public void Delete()
@@ -62,6 +48,48 @@ namespace Prog_III_2020_2_sesion_1
             {
                 ListaCarros.Remove(this);
             }
+        }
+        public static void Delete(object data)
+        {
+            using (StreamWriter fileWrite = new StreamWriter("Files/temp.txt", true))
+            {
+                using (StreamReader fielRead = new StreamReader("Files/Carro.txt"))
+                {
+                    String line;
+
+                    while ((line = fielRead.ReadLine()) != null)
+                    {
+                        string[] datos = line.Split(new char[] { ',' });
+                        string[] dateValues = (data.ToString()).Split('\t');
+                        if (datos[0].ToString() != dateValues[0].ToString())
+                        {
+                            fileWrite.WriteLine(line);
+                        }
+
+                    }
+                }
+            }
+
+            //aqui se renombrea el archivo temporal
+            File.Delete("Files/Carro.txt");
+            File.Move("Files/temp.txt", "Files/Carro.txt");
+        }
+        public static void Edit(int linea, int i, object data, string Archivo)
+        {
+            string[] All = File.ReadAllLines(Archivo);
+            string[] Lines = (All[linea]).Split(',');
+            string[] date = (data.ToString()).Split('\t');
+            Lines[i] = date[i];
+            string dataText = "";
+            for (int j = 0; j < Lines.Length; j++)
+            {
+                dataText += Lines[j];
+                if (j < Lines.Length) dataText += ",";
+            }
+
+            All[linea] = dataText;
+
+            File.WriteAllLines(Archivo, All);
         }
 
         public static void Update(int IdCarro, int NDato)
@@ -117,7 +145,7 @@ namespace Prog_III_2020_2_sesion_1
                         
                 }
 
-                v.Save();
+                Edit(ListaCarros.IndexOf(v), NDato-1, v, "Files/Carro.txt");
 
             }
 
@@ -234,9 +262,9 @@ namespace Prog_III_2020_2_sesion_1
         public static void LoadList()
         {
             ListaCarros = new List<Carro>();
-            if (System.IO.File.Exists("Carro.txt"))
+            if (System.IO.File.Exists("Files/Carro.txt"))
             {
-                System.IO.StreamReader reader = new System.IO.StreamReader("Carro.txt");
+                System.IO.StreamReader reader = new System.IO.StreamReader("Files/Carro.txt");
 
                 while (!reader.EndOfStream)
                 {
@@ -269,7 +297,7 @@ namespace Prog_III_2020_2_sesion_1
                     "\t2. Eliminar Carro.\n" +
                     "\t3. Editar Carro.\n" +
                     "\t4. Listar Carros.\n" +
-                    "\t5. Busacar Carro.\n" +
+                    "\t5. Buscar Carro.\n" +
                     "\t6. Salir.\n" +
                     "\t:: ");
 
@@ -337,6 +365,7 @@ namespace Prog_III_2020_2_sesion_1
                             if (Scanner.NextInt() == 1)
                             {
                                 vn.Delete();
+                                Delete(vn);
                                 Console.WriteLine("\n¡Proceso realizado con éxito!");
                             }
                             else Console.WriteLine("\n¡Proceso cancelado!");

@@ -11,8 +11,8 @@ namespace Prog_III_2020_2_sesion_1
         public static void Main(string[] args)
         {
 
-            //Vendedor.MenuAdminVendedor();
-            Cliente.MenuClientes();
+            Vendedor.MenuAdminVendedor();
+            //Cliente.MenuClientes();
             //Carro.MenuCarro();
 
             Console.Read();
