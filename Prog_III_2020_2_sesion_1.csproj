@@ -47,6 +47,7 @@
     <Compile Include="Cliente.cs" />
     <Compile Include="Combustible.cs" />
     <Compile Include="EstadoCivil.cs" />
+    <Compile Include="Inventario.cs" />
     <Compile Include="Persona.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
