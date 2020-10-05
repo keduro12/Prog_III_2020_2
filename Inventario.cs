@@ -4,19 +4,21 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Prog_III_2020_2_sesion_1
 {
     class Inventario
     {
         public static List<Inventario> ListaInventario;
-        public int IdInventario { get; set; }
-        public Carro Car { get; set; }
+
         public int Cantidad { get; set; }
         public long PrecioBase { get; set; }
         public long PrecioVenta { get; set; }
         public DateTime FechaIngreso { get; set; }
         public DateTime FechaSalida { get; set; }
+        public Carro Car { get; set; }
+        public int IdInventario { get; set; }
 
         public void Add()
         {
@@ -32,27 +34,12 @@ namespace Prog_III_2020_2_sesion_1
 
         private void Save()
         {
-            System.IO.StreamWriter writer = new System.IO.StreamWriter("Inventario.txt", true);
+            StreamWriter writer = new StreamWriter("Files/Inventario.txt", true);
 
-            writer.WriteLine(IdInventario.ToString() + "," + Car.ToString() + "," + Cantidad.ToString() + "," + PrecioBase.ToString() + "," + PrecioVenta.ToString()
-                + "," + FechaIngreso.ToShortDateString() + "," + FechaSalida.ToShortDateString());
+            writer.WriteLine(Cantidad.ToString() + "," + PrecioBase.ToString() + "," + PrecioVenta.ToString() + "," +
+                FechaIngreso.ToString() + "," + FechaSalida.ToString() + "," + Car.ToString() + "," + IdInventario.ToString());
 
             writer.Close();
-        }
-
-
-
-
-        public static void Delete(int IdInventario)
-        {
-            if (Find(IdInventario))
-            {
-                foreach (Inventario v in ListaInventario)
-                {
-                    if (v.IdInventario == IdInventario)
-                        ListaInventario.Remove(v);
-                }
-            }
         }
 
         public void Delete()
@@ -63,41 +50,86 @@ namespace Prog_III_2020_2_sesion_1
             }
         }
 
+        public static void Delete(object data)
+        {
+            using (StreamWriter fileWrite = new StreamWriter("Files/temp.txt", true))
+            {
+                using (StreamReader fielRead = new StreamReader("Files/Inventario.txt"))
+                {
+                    String line;
+
+                    while ((line = fielRead.ReadLine()) != null)
+                    {
+                        string[] datos = line.Split(new char[] { ',' });
+                        string[] dateValues = (data.ToString()).Split('\t');
+                        if (datos[0].ToString() != dateValues[0].ToString())
+                        {
+                            fileWrite.WriteLine(line);
+                        }
+
+                    }
+                }
+            }
+
+            //aqui se renombrea el archivo temporal
+            File.Delete("Files/Inventario.txt");
+            File.Move("Files/temp.txt", "Files/Inventario.txt");
+        }
+        public static void Edit(int linea, int i, object data, string Archivo)
+        {
+            string[] All = File.ReadAllLines(Archivo);
+            string[] Lines = (All[linea]).Split(',');
+            string[] date = (data.ToString()).Split('\t');
+            Lines[i] = date[i];
+            string dataText = "";
+            for (int j = 0; j < Lines.Length; j++)
+            {
+                dataText += Lines[j];
+                if (j < Lines.Length) dataText += ",";
+            }
+
+            All[linea] = dataText;
+
+            File.WriteAllLines(Archivo, All);
+        }
+
         public static void Update(int IdInventario, int NDato)
         {
             if (Find(IdInventario))
             {
                 Inventario v = Search(IdInventario);
-
-                switch (NDato)
+                if (v != null)
                 {
-                    case 1:
-                        Console.WriteLine("\nNueva Cantidad: ");
-                        v.Cantidad = Scanner.NextInt();
-                        break;
+                    switch (NDato)
+                    {
+                        case 1:
+                            Console.WriteLine("\nNueva Cantidad: ");
+                            v.Cantidad = Scanner.NextInt();
+                            break;
 
-                    case 2:
-                        Console.Write("\nNuevo Precio Base: ");
-                        v.PrecioBase = Scanner.NextLong();
-                        break;
-                    case 3:
-                        Console.Write("\nNuevo Precio de venta: ");
-                        v.PrecioVenta = Scanner.NextLong();
-                        break;
-                    case 4:
-                        Console.Write("\nFecha de ingreso dd/MM/yyy: ");
-                        v.FechaIngreso = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
-                        break;
+                        case 2:
+                            Console.Write("\nNuevo Precio Base: ");
+                            v.PrecioBase = Scanner.NextLong();
+                            break;
+                        case 3:
+                            Console.Write("\nNuevo Precio de venta: ");
+                            v.PrecioVenta = Scanner.NextLong();
+                            break;
+                        case 4:
+                            Console.Write("\nFecha de ingreso dd/MM/yyy: ");
+                            v.FechaIngreso = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
+                            break;
 
-                    case 5:
-                        Console.Write("\nFecha de Salida dd/MM/yyy: ");
-                        v.FechaSalida = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
-                        break;
+                        case 5:
+                            Console.Write("\nFecha de Salida dd/MM/yyy: ");
+                            v.FechaSalida = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
+                            break;
 
+                    }
+
+                    Edit(ListaInventario.IndexOf(v), NDato-1, v, "Files/Inventario.txt");
                 }
-
-                v.Save();
-
+                else Console.WriteLine("¡Oooops, A ocurrido un erro!");
             }
 
         }
@@ -149,11 +181,18 @@ namespace Prog_III_2020_2_sesion_1
             return false;
         }
 
-        public static bool Find(string VIN)
+        public static bool itemExistValues(Inventario v)
         {
-            foreach (Inventario Inventario in ListaInventario)
+            foreach (Inventario item in ListaInventario)
             {
-                if (Inventario.VIN.ToLower() == VIN.ToLower()) return true;
+                if(item.Car == v.Car)
+                {
+                    if(item.PrecioBase == v.PrecioBase && item.PrecioVenta == v.PrecioVenta && item.FechaIngreso == v.FechaIngreso && item.FechaSalida == v.FechaSalida)
+                    {
+                        v.Cantidad++;
+                        return true;
+                    }
+                }
             }
             return false;
         }
@@ -167,19 +206,7 @@ namespace Prog_III_2020_2_sesion_1
                     return v;
                 }
             }
-            return new Inventario();
-        }
-
-        public static Inventario Search(string VIN)
-        {
-            foreach (Inventario v in ListaInventario)
-            {
-                if (v.VIN.ToLower() == VIN.ToLower())
-                {
-                    return v;
-                }
-            }
-            return new Inventario();
+            return null;
         }
 
         public void SetItems(int i, string value)
@@ -187,25 +214,25 @@ namespace Prog_III_2020_2_sesion_1
             switch (i)
             {
                 case 0:
-                    IdInventario = Convert.ToInt32(value);
+                    Cantidad = Convert.ToInt32(value);
                     break;
                 case 1:
-                    VIN = (string)value;
+                    PrecioBase = Convert.ToInt64(value);
                     break;
                 case 2:
-                    Modelo = (string)value;
+                    PrecioVenta = Convert.ToInt64(value);
                     break;
                 case 3:
-                    Color = (string)value;
+                    FechaIngreso = DateTime.ParseExact(value, "dd/MM/yyyy", null);
                     break;
                 case 4:
-                    Marca = (string)value;
+                    FechaSalida = DateTime.ParseExact(value, "dd/MM/yyyy", null);
                     break;
                 case 5:
-                    TipoCombustible = (Combustible)Combustible.Parse(typeof(Combustible), value.ToString());
+                    Car = (Carro)Convert.ChangeType(value, Car.GetType());
                     break;
                 case 6:
-                    TipoTransmision = (Transmision)Transmision.Parse(typeof(Transmision), value.ToString());
+                    IdInventario = Convert.ToInt32(value);
                     break;
             }
         }
@@ -213,9 +240,9 @@ namespace Prog_III_2020_2_sesion_1
         public static void LoadList()
         {
             ListaInventario = new List<Inventario>();
-            if (System.IO.File.Exists("Inventario.txt"))
+            if (File.Exists("Files/Inventario.txt"))
             {
-                System.IO.StreamReader reader = new System.IO.StreamReader("Inventario.txt");
+                StreamReader reader = new StreamReader("Files/Inventario.txt");
 
                 while (!reader.EndOfStream)
                 {
@@ -233,6 +260,114 @@ namespace Prog_III_2020_2_sesion_1
 
                 reader.Close();
             }
+        }
+
+        public static void MenuInventario()
+        {
+            int option;
+
+            LoadList();
+
+            do
+            {
+                Console.Write("\n\tBienvenido al menú de Inventario\n" +
+                    "\t1. Crear Item.\n" +
+                    "\t2. Eliminar Item.\n" +
+                    "\t3. Editar Item.\n" +
+                    "\t4. Listar Item.\n" +
+                    "\t5. Buscar Item.\n" +
+                    "\t6. Salir.\n" +
+                    "\t:: ");
+
+                option = Scanner.NextInt();
+
+                switch (option)
+                {
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine("\n\t-- Crear Item ---");
+                        Inventario v = new Inventario();
+
+                        Console.WriteLine("\t--- Elija un carro para el Item ---");
+                        Console.WriteLine("\t--- Lista de carros ---");
+                        Carro.ToList();
+                        Console.Write("\t Ingrese ID del carro\n:: ");
+                        v.Car = Carro.Search(Scanner.NextInt());
+
+                        Console.Write("\nCantidad: ");
+                        v.Cantidad = Scanner.NextInt();
+
+                        Console.Write("\nPrecio Base: ");
+                        v.PrecioBase = Scanner.NextLong();
+
+                        Console.Write("\nPrecio de Venta: ");
+                        v.PrecioVenta = Scanner.NextLong();
+
+                        Console.Write("\nFecha de ingreso: ");
+                        v.FechaIngreso = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
+
+                        Console.Write("\nFecha de salida: ");
+                        v.FechaSalida = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
+
+                        v.Show();
+
+                        if (!itemExistValues(v))
+                            v.Add();
+                        break;
+
+                    case 2:
+                        Console.Clear();
+                        Console.Write("\n\t--- Eliminar Item ---\nNúmero de ID del Item: ");
+                        int Item = Scanner.NextInt();
+
+                        if (Find(Item))
+                        {
+                            Inventario vn = Search(Item);
+                            vn.Show();
+                            Console.Write("\n¿Borrar Carro?\n\t1. Si.\n\t2. No.\n::");
+                            if (Scanner.NextInt() == 1)
+                            {
+                                vn.Delete();
+                                Delete(vn);
+                                Console.WriteLine("\n¡Proceso realizado con éxito!");
+                            }
+                            else Console.WriteLine("\n¡Proceso cancelado!");
+
+                        }
+
+                        break;
+                    case 3:
+                        Console.Clear();
+                        Console.Write("\n\t--- Editar datos del Item ---\nNúmero de ID del Item: ");
+                        int IdItem = Scanner.NextInt();
+                        Search(IdItem).Show();
+                        Console.Write("\n\tOpciones a editar:\n" +
+                           "\t1.  Cantidad.\n" +
+                           "\t2.  Precio Base.\n" +
+                           "\t3.  Precio de Venta.\n" +
+                           "\t4.  Fecha de ingreso.\n" +
+                           "\t5.  Fecha de salida.\n" +
+                           "\t:: ");
+
+                        Update(IdItem, Scanner.NextInt());
+
+                        break;
+                    case 4:
+                        Console.Clear();
+                        Console.WriteLine("\n\t-- Lista de Items ---\n");
+                        ToList();
+                        break;
+
+                    case 5:
+                        Console.Clear();
+                        Console.WriteLine("\n\t-- Buscar Item ---\n");
+
+                        Console.Write("\nIngrese el ID del Item.\n:: ");
+                        Search(Scanner.NextInt()).Show();
+                        break;
+                }
+
+            } while (option != 6);
         }
     }
 }

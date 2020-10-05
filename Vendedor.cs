@@ -138,73 +138,76 @@ namespace Prog_III_2020_2_sesion_1
             {
                 Vendedor v = Search(CedVendedor);
 
-                switch (NDato) 
+                if (v != null)
                 {
-                    case 1:
-                        Console.Write("\nNueva Cedula: ");
-                        v.Cedula = Scanner.NextLong();
-                        break;
-                    case 2:
-                        Console.Write("\nNuevo Nombre: ");
-                        v.Nombre = Scanner.NextLine();
-                        break;
-                    case 3:
-                        Console.Write("\nNueva Fecha de nacimiento dd/MM/yyy");
-                        v.FechaNacimiento = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
-                        break;
-                    case 4:
-                        Console.Write("\nNuevo Sexo\n1. Femenino.\n2. Masculino.\n:: ");
-                        if (Scanner.NextInt() == 1) v.Sexo = Sexo.Femnino;
-                        else v.Sexo = Sexo.Masculino;
-                        break;
-                    case 5:
-                        Console.Write("\nNuevo Teléfono: ");
-                        v.Telefono = Scanner.NextLong();
-                        break;
-                    case 6:
-                        Console.Write("\nNuevo Correo: ");
-                        v.Correo = Scanner.NextLine();
-                        break;
-                    case 7:
-                        Console.Write("\nNueva Dirección: ");
-                        v.Direccion = Scanner.NextLine();
-                        break;
-                    case 8:
-                        Console.Write("\nNuevo Estado civil\n1. Soltero.\n2. Casado.\n3. Viudo.\n4. Divorciado.\n5. Union libre.\n:: ");
-                        int estado = Scanner.NextInt();
-                        for (int i = 0; i < 5; i++)
-                        {
-                            if (estado - 1 == i)
+                    switch (NDato)
+                    {
+                        case 1:
+                            Console.Write("\nNueva Cedula: ");
+                            v.Cedula = Scanner.NextLong();
+                            break;
+                        case 2:
+                            Console.Write("\nNuevo Nombre: ");
+                            v.Nombre = Scanner.NextLine();
+                            break;
+                        case 3:
+                            Console.Write("\nNueva Fecha de nacimiento dd/MM/yyy");
+                            v.FechaNacimiento = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
+                            break;
+                        case 4:
+                            Console.Write("\nNuevo Sexo\n1. Femenino.\n2. Masculino.\n:: ");
+                            if (Scanner.NextInt() == 1) v.Sexo = Sexo.Femnino;
+                            else v.Sexo = Sexo.Masculino;
+                            break;
+                        case 5:
+                            Console.Write("\nNuevo Teléfono: ");
+                            v.Telefono = Scanner.NextLong();
+                            break;
+                        case 6:
+                            Console.Write("\nNuevo Correo: ");
+                            v.Correo = Scanner.NextLine();
+                            break;
+                        case 7:
+                            Console.Write("\nNueva Dirección: ");
+                            v.Direccion = Scanner.NextLine();
+                            break;
+                        case 8:
+                            Console.Write("\nNuevo Estado civil\n1. Soltero.\n2. Casado.\n3. Viudo.\n4. Divorciado.\n5. Union libre.\n:: ");
+                            int estado = Scanner.NextInt();
+                            for (int i = 0; i < 5; i++)
                             {
-                                v.EstadoCivil = (EstadoCivil)i;
-                                break;
-                            };
-                        }
-                        break;
-                    case 9:
-                        NDato = 10;
-                        Console.Write("\nNueva Fecha de ingreso dd/MM/yyy");
-                        v.FechaIngreso = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
-                        break;
-                    case 10:
-                        NDato = 11;
-                        Console.Write("\nNuevo Salario: ");
-                        v.Salario = Scanner.NextInt();
-                        break;
-                    case 11:
-                        NDato = 12;
-                        Console.Write("\nNueva Profesión: ");
-                        v.Profesion = Scanner.NextLine();
-                        break;
-                    case 12:
-                        NDato = 13;
-                        Console.Write("\nNueva Calificación de 1 a 10: ");
-                        v.Calificacion = Scanner.NextInt();
-                        break;
+                                if (estado - 1 == i)
+                                {
+                                    v.EstadoCivil = (EstadoCivil)i;
+                                    break;
+                                };
+                            }
+                            break;
+                        case 9:
+                            NDato = 10;
+                            Console.Write("\nNueva Fecha de ingreso dd/MM/yyy");
+                            v.FechaIngreso = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
+                            break;
+                        case 10:
+                            NDato = 11;
+                            Console.Write("\nNuevo Salario: ");
+                            v.Salario = Scanner.NextInt();
+                            break;
+                        case 11:
+                            NDato = 12;
+                            Console.Write("\nNueva Profesión: ");
+                            v.Profesion = Scanner.NextLine();
+                            break;
+                        case 12:
+                            NDato = 13;
+                            Console.Write("\nNueva Calificación de 1 a 10: ");
+                            v.Calificacion = Scanner.NextInt();
+                            break;
+                    }
+
+                    Edit(ListaVendedor.IndexOf(v), NDato - 1, v, "Files/Vendedor.txt");
                 }
-
-                Edit(ListaVendedor.IndexOf(v), NDato-1, v, "Files/Vendedor.txt");
-
+                else Console.WriteLine("¡Oooops, A ocurrido un erro!");
             }
             
         }
@@ -277,7 +280,7 @@ namespace Prog_III_2020_2_sesion_1
                     return v;
                 }
             }
-            return new Vendedor();
+            return null;
         }
 
         public void SetItems(int i, string value)

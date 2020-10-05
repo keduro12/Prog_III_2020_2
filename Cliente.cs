@@ -92,54 +92,56 @@ namespace Prog_III_2020_2_sesion_1
             if (Find(CedCliente))
             {
                 Cliente v = Search(CedCliente);
-
-                switch (NDato)
+                if (v != null)
                 {
-                    case 1:
-                        Console.Write("\nNueva Cedula: ");
-                        v.Cedula = Scanner.NextLong();
-                        break;
-                    case 2:
-                        Console.Write("\nNuevo Nombre: ");
-                        v.Nombre = Scanner.NextLine();
-                        break;
-                    case 3:
-                        Console.Write("\nNueva Fecha de nacimiento dd/MM/yyy: ");
-                        v.FechaNacimiento = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
-                        break;
-                    case 4:
-                        Console.Write("\nNuevo Sexo\n1. Femenino.\n2. Masculino.\n:: ");
-                        if (Scanner.NextInt() == 1) v.Sexo = Sexo.Femnino;
-                        else v.Sexo = Sexo.Masculino;
-                        break;
-                    case 5:
-                        Console.Write("\nNuevo Teléfono: ");
-                        v.Telefono = Scanner.NextLong();
-                        break;
-                    case 6:
-                        Console.Write("\nNuevo Correo: ");
-                        v.Correo = Scanner.NextLine();
-                        break;
-                    case 7:
-                        Console.Write("\nNueva Dirección: ");
-                        v.Direccion = Scanner.NextLine();
-                        break;
-                    case 8:
-                        Console.Write("\nNuevo Estado civil\n1. Soltero.\n2. Casado.\n3. Viudo.\n4. Divorciado.\n5. Union libre.\n:: ");
-                        int estado = Scanner.NextInt();
-                        for (int i = 0; i < 5; i++)
-                        {
-                            if (estado - 1 == i)
+                    switch (NDato)
+                    {
+                        case 1:
+                            Console.Write("\nNueva Cedula: ");
+                            v.Cedula = Scanner.NextLong();
+                            break;
+                        case 2:
+                            Console.Write("\nNuevo Nombre: ");
+                            v.Nombre = Scanner.NextLine();
+                            break;
+                        case 3:
+                            Console.Write("\nNueva Fecha de nacimiento dd/MM/yyy: ");
+                            v.FechaNacimiento = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
+                            break;
+                        case 4:
+                            Console.Write("\nNuevo Sexo\n1. Femenino.\n2. Masculino.\n:: ");
+                            if (Scanner.NextInt() == 1) v.Sexo = Sexo.Femnino;
+                            else v.Sexo = Sexo.Masculino;
+                            break;
+                        case 5:
+                            Console.Write("\nNuevo Teléfono: ");
+                            v.Telefono = Scanner.NextLong();
+                            break;
+                        case 6:
+                            Console.Write("\nNuevo Correo: ");
+                            v.Correo = Scanner.NextLine();
+                            break;
+                        case 7:
+                            Console.Write("\nNueva Dirección: ");
+                            v.Direccion = Scanner.NextLine();
+                            break;
+                        case 8:
+                            Console.Write("\nNuevo Estado civil\n1. Soltero.\n2. Casado.\n3. Viudo.\n4. Divorciado.\n5. Union libre.\n:: ");
+                            int estado = Scanner.NextInt();
+                            for (int i = 0; i < 5; i++)
                             {
-                                v.EstadoCivil = (EstadoCivil)i;
-                                break;
-                            };
-                        }
-                        break;
+                                if (estado - 1 == i)
+                                {
+                                    v.EstadoCivil = (EstadoCivil)i;
+                                    break;
+                                };
+                            }
+                            break;
+                    }
+
+                    Edit(ListaClientes.IndexOf(v), NDato - 1, v, "Files/Cliente.txt");
                 }
-
-                Edit(ListaClientes.IndexOf(v), NDato - 1, v, "Files/Cliente.txt");
-
+                else Console.WriteLine("¡Oooops, A ocurrido un erro!");
             }
 
         }
@@ -211,7 +213,7 @@ namespace Prog_III_2020_2_sesion_1
                     return v;
                 }
             }
-            return new Cliente();
+            return null;
         }
 
         public void SetItems(int i, string value)
@@ -251,9 +253,9 @@ namespace Prog_III_2020_2_sesion_1
         public static void LoadList()
         {
             ListaClientes = new List<Cliente>();
-            if (System.IO.File.Exists("Files/Cliente.txt"))
+            if (File.Exists("Files/Cliente.txt"))
             {
-                System.IO.StreamReader reader = new System.IO.StreamReader("Files/Cliente.txt");
+                StreamReader reader = new StreamReader("Files/Cliente.txt");
 
                 while (!reader.EndOfStream)
                 {

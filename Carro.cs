@@ -97,56 +97,58 @@ namespace Prog_III_2020_2_sesion_1
             if (Find(IdCarro))
             {
                 Carro v = Search(IdCarro);
-
-                switch (NDato)
+                if (v != null)
                 {
-                    case 1:
-                        Console.WriteLine("\nNuevo Número de Chasis: ");
-                        v.VIN = Scanner.NextLine();
-                        break;
+                    switch (NDato)
+                    {
+                        case 1:
+                            Console.WriteLine("\nNuevo Número de Chasis: ");
+                            v.VIN = Scanner.NextLine();
+                            break;
 
-                    case 2:
-                        Console.Write("\nNueva Modelo: ");
-                        v.Modelo = Scanner.NextLine();
-                        break;
-                    case 3:
-                        Console.Write("\nNuevo Color: ");
-                        v.Color = Scanner.NextLine();
-                        break;
-                    case 4:
-                        Console.Write("\nNuevo Marca: ");
-                        v.Marca = Scanner.NextLine();
-                        break;
+                        case 2:
+                            Console.Write("\nNueva Modelo: ");
+                            v.Modelo = Scanner.NextLine();
+                            break;
+                        case 3:
+                            Console.Write("\nNuevo Color: ");
+                            v.Color = Scanner.NextLine();
+                            break;
+                        case 4:
+                            Console.Write("\nNuevo Marca: ");
+                            v.Marca = Scanner.NextLine();
+                            break;
 
-                    case 5:
-                        Console.Write("\nNuevo Combustible\n1. Gasolina.\n2. Biodiésel.\n3. Gas Natural.\n4. Diésel.\n:: ");
-                        int tipo = Scanner.NextInt();
-                        for (int i = 0; i < 4; i++)
-                        {
-                            if (tipo - 1 == i)
+                        case 5:
+                            Console.Write("\nNuevo Combustible\n1. Gasolina.\n2. Biodiésel.\n3. Gas Natural.\n4. Diésel.\n:: ");
+                            int tipo = Scanner.NextInt();
+                            for (int i = 0; i < 4; i++)
                             {
-                                v.TipoCombustible = (Combustible)i;
-                                break;
-                            };
-                        }
-                        break;
-                    case 6:
-                        Console.Write("\nNueva Transmisión\n1. Manual.\n2. Automatica.\n3. CVT.\n:: ");
-                        int transmision = Scanner.NextInt();
-                        for (int i = 0; i < 3; i++)
-                        {
-                            if (transmision - 1 == i)
+                                if (tipo - 1 == i)
+                                {
+                                    v.TipoCombustible = (Combustible)i;
+                                    break;
+                                };
+                            }
+                            break;
+                        case 6:
+                            Console.Write("\nNueva Transmisión\n1. Manual.\n2. Automatica.\n3. CVT.\n:: ");
+                            int transmision = Scanner.NextInt();
+                            for (int i = 0; i < 3; i++)
                             {
-                                v.TipoTransmision = (Transmision)i;
-                                break;
-                            };
-                        }
-                        break;
-                        
+                                if (transmision - 1 == i)
+                                {
+                                    v.TipoTransmision = (Transmision)i;
+                                    break;
+                                };
+                            }
+                            break;
+
+                    }
+
+                    Edit(ListaCarros.IndexOf(v), NDato - 1, v, "Files/Carro.txt");
                 }
-
-                Edit(ListaCarros.IndexOf(v), NDato-1, v, "Files/Carro.txt");
-
+                else Console.WriteLine("¡Oooops, A ocurrido un erro!");
             }
 
         }
@@ -179,8 +181,8 @@ namespace Prog_III_2020_2_sesion_1
         /// </summary>
         public void Show()
         {
-            Console.WriteLine(IdCarro.ToString().PadRight(4) + VIN.PadRight(5) + Modelo.PadLeft(2).PadRight(4) + Color.PadRight(10) + 
-                Marca.PadRight(10) + TipoCombustible.ToString().PadRight(10) + TipoTransmision.ToString().PadRight(10).PadLeft(12));
+            Console.WriteLine(VIN.PadRight(5) + Modelo.PadLeft(2).PadRight(4) + Color.PadRight(10) + Marca.PadRight(10) + 
+                TipoCombustible.ToString().PadRight(10) + TipoTransmision.ToString().PadRight(10).PadLeft(12) + IdCarro.ToString().PadRight(4));
         }
 
         public override string ToString()
@@ -228,7 +230,7 @@ namespace Prog_III_2020_2_sesion_1
                     return v;
                 }
             }
-            return new Carro();
+            return null;
         }
 
         public void SetItems(int i, string value)
@@ -236,25 +238,25 @@ namespace Prog_III_2020_2_sesion_1
             switch (i)
             {
                 case 0:
-                    IdCarro = Convert.ToInt32(value);
-                    break;
-                case 1:
                     VIN = (string)value;
                     break;
-                case 2:
+                case 1:
                     Modelo = (string)value;
                     break;
-                case 3:
+                case 2:
                     Color = (string)value;
                     break;
-                case 4:
+                case 3:
                     Marca = (string)value;
                     break;
-                case 5:
+                case 4:
                     TipoCombustible = (Combustible)Combustible.Parse(typeof(Combustible), value.ToString());
                     break;
-                case 6:
+                case 5:
                     TipoTransmision = (Transmision)Transmision.Parse(typeof(Transmision), value.ToString());
+                    break;
+                case 6:
+                    IdCarro = Convert.ToInt32(value);
                     break;
             }
         }
