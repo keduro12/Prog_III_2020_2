@@ -62,7 +62,7 @@ namespace Prog_III_2020_2_sesion_1
                     {
                         string[] datos = line.Split(new char[] { ',' });
                         string[] dateValues = (data.ToString()).Split('\t');
-                        if (datos[0].ToString() != dateValues[0].ToString())
+                        if (datos[5].ToString() != dateValues[5].ToString())
                         {
                             fileWrite.WriteLine(line);
                         }
@@ -162,8 +162,8 @@ namespace Prog_III_2020_2_sesion_1
         /// </summary>
         public void Show()
         {
-            Console.WriteLine(IdInventario.ToString().PadRight(4) + Car.ToString() + Cantidad.ToString() + PrecioBase.ToString()+
-                PrecioVenta.ToString() + FechaIngreso.ToString() + FechaSalida.ToString());
+            Console.WriteLine(Cantidad.ToString().PadRight(10) + PrecioBase.ToString() + PrecioVenta.ToString().PadLeft(2) + 
+                FechaIngreso.ToString().PadRight(2).PadLeft(2) + FechaSalida.ToString().PadRight(2).PadLeft(2) + Car.ToString().PadRight(2).PadLeft(2) + IdInventario.ToString().PadRight(2).PadLeft(4));
         }
 
         public override string ToString()
@@ -189,7 +189,7 @@ namespace Prog_III_2020_2_sesion_1
                 {
                     if(item.PrecioBase == v.PrecioBase && item.PrecioVenta == v.PrecioVenta && item.FechaIngreso == v.FechaIngreso && item.FechaSalida == v.FechaSalida)
                     {
-                        v.Cantidad++;
+                        item.Cantidad++;
                         return true;
                     }
                 }
@@ -288,6 +288,7 @@ namespace Prog_III_2020_2_sesion_1
                         Console.WriteLine("\n\t-- Crear Item ---");
                         Inventario v = new Inventario();
 
+                        Carro.LoadList();
                         Console.WriteLine("\t--- Elija un carro para el Item ---");
                         Console.WriteLine("\t--- Lista de carros ---");
                         Carro.ToList();
@@ -304,15 +305,21 @@ namespace Prog_III_2020_2_sesion_1
                         v.PrecioVenta = Scanner.NextLong();
 
                         Console.Write("\nFecha de ingreso: ");
-                        v.FechaIngreso = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
+                        v.FechaIngreso = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
 
                         Console.Write("\nFecha de salida: ");
-                        v.FechaSalida = DateTime.ParseExact(Console.ReadLine(), "d/MM/yyyy", null);
+                        v.FechaSalida = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
+
+                        if (ListaInventario.Count != 0)
+                            v.IdInventario = ListaInventario.Last().IdInventario + 1;
+                        else
+                            v.IdInventario = 1;
 
                         v.Show();
 
                         if (!itemExistValues(v))
                             v.Add();
+
                         break;
 
                     case 2:
@@ -324,7 +331,7 @@ namespace Prog_III_2020_2_sesion_1
                         {
                             Inventario vn = Search(Item);
                             vn.Show();
-                            Console.Write("\n¿Borrar Carro?\n\t1. Si.\n\t2. No.\n::");
+                            Console.Write("\n¿Borrar Carro?\n\t1. Si.\n\t2. No.\n:: ");
                             if (Scanner.NextInt() == 1)
                             {
                                 vn.Delete();

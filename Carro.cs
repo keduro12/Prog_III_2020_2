@@ -182,7 +182,7 @@ namespace Prog_III_2020_2_sesion_1
         public void Show()
         {
             Console.WriteLine(VIN.PadRight(5) + Modelo.PadLeft(2).PadRight(4) + Color.PadRight(10) + Marca.PadRight(10) + 
-                TipoCombustible.ToString().PadRight(10) + TipoTransmision.ToString().PadRight(10).PadLeft(12) + IdCarro.ToString().PadRight(4));
+                TipoCombustible.ToString().PadRight(10) + TipoTransmision.ToString().PadRight(10).PadLeft(12) + IdCarro.ToString().PadRight(2).PadLeft(4));
         }
 
         public override string ToString()
@@ -218,7 +218,7 @@ namespace Prog_III_2020_2_sesion_1
                     return v;
                 }
             }
-            return new Carro();
+            return null;
         }
 
         public static Carro Search(string VIN)
