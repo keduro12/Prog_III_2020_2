@@ -17,6 +17,7 @@ namespace Prog_III_2020_2_sesion_1
             Inventario.MenuInventario();
 
             //idsfusofdsilkafedf
+            //ffgfgdgffgdsgdfgfgdg
 
             Console.Read();
             
