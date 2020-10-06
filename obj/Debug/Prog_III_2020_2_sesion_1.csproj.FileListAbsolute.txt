@@ -12,3 +12,10 @@ D:\Documentos\UPC\Programación III\Prog_III_2020_2_sesion_1\obj\Debug\Prog_III_
 D:\Documentos\UPC\Programación III\Prog_III_2020_2_sesion_1\obj\Debug\Prog_III_2020_2_sesion_1.csproj.CoreCompileInputs.cache
 D:\Documentos\UPC\Programación III\Prog_III_2020_2_sesion_1\obj\Debug\Prog_III_2020_2_sesion_1.exe
 D:\Documentos\UPC\Programación III\Prog_III_2020_2_sesion_1\obj\Debug\Prog_III_2020_2_sesion_1.pdb
+C:\Users\edinson\Documents\GitHub\Prog_III_2020_2\bin\Debug\Prog_III_2020_2_sesion_1.exe.config
+C:\Users\edinson\Documents\GitHub\Prog_III_2020_2\bin\Debug\Prog_III_2020_2_sesion_1.exe
+C:\Users\edinson\Documents\GitHub\Prog_III_2020_2\bin\Debug\Prog_III_2020_2_sesion_1.pdb
+C:\Users\edinson\Documents\GitHub\Prog_III_2020_2\obj\Debug\Prog_III_2020_2_sesion_1.csprojAssemblyReference.cache
+C:\Users\edinson\Documents\GitHub\Prog_III_2020_2\obj\Debug\Prog_III_2020_2_sesion_1.csproj.CoreCompileInputs.cache
+C:\Users\edinson\Documents\GitHub\Prog_III_2020_2\obj\Debug\Prog_III_2020_2_sesion_1.exe
+C:\Users\edinson\Documents\GitHub\Prog_III_2020_2\obj\Debug\Prog_III_2020_2_sesion_1.pdb
