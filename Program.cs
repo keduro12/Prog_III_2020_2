@@ -18,6 +18,7 @@ namespace Prog_III_2020_2_sesion_1
 
             //idsfusofdsilkafedf
             //ffgfgdgffgdsgdfgfgdg
+            //hgfhfdhdggjhgj
 
             Console.Read();
             
