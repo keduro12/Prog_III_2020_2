@@ -111,12 +111,18 @@ namespace Prog_III_2020_2_sesion_1
             string[] All = File.ReadAllLines(Archivo);
             string[] Lines = (All[linea]).Split(',');
             string[] date = (data.ToString()).Split('\t');
+
+            int calificacion = Convert.ToInt32(date[12]);
+            date[12] = calificacion.ToString();
+
             Lines[i] = date[i];
             string dataText = "";
             for (int j = 0; j < Lines.Length; j++)
             {
-                dataText += Lines[j];
-                if (j < Lines.Length) dataText += ",";
+                if(Lines[j] != "\n")
+                    dataText += Lines[j];
+                if (j < Lines.Length-1) 
+                    dataText += ",";
             }
 
             All[linea] = dataText;
